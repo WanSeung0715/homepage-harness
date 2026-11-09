@@ -1,23 +1,23 @@
-# Security and guestbook data
+# 보안과 방명록 데이터
 
-## Input and rendering
+## 입력과 화면 출력
 
-- Validate all client input again on the server; client-side validation is only a usability aid.
-- Enforce documented maximum lengths and reject control/zero-width-only input where appropriate.
-- Render guestbook names and messages as text, never as trusted HTML. Exercise XSS payloads and confirm they display inertly.
-- Keep password material out of list/API responses. Store only a per-entry salted password hash using the established password-hashing implementation; never log or expose the plaintext.
-- Preserve the currently documented password policy and make the UI, Worker validation, and documentation agree.
+- 모든 사용자 입력은 서버에서 다시 검증합니다. 클라이언트 검증은 사용성 향상을 위한 보조 수단일 뿐입니다.
+- 문서화된 최대 길이를 강제하고, 적절한 경우 제어 문자나 폭이 0인 문자(Zero-width character)만 있는 입력을 거부합니다.
+- 방명록 이름과 메시지는 신뢰할 수 있는 HTML이 아니라 텍스트로 렌더링합니다. XSS 입력이 실행되지 않고 문자로 표시되는지 검사합니다.
+- 비밀번호 정보는 목록/API 응답에 포함하지 않습니다. 기존 비밀번호 해시 구현을 사용해 글마다 salt를 다르게 적용한 해시만 저장하며, 원문을 로그에 남기거나 노출하지 않습니다.
+- 현재 문서화된 비밀번호 정책을 유지하고 UI, Worker 검증, 문서가 서로 일치하게 합니다.
 
-## Public data and destructive operations
+## 공개 데이터와 파괴적 작업
 
-- Guestbook content is public. Do not publish personal data without the user's explicit direction.
-- Do not delete an individual public entry or clear the guestbook unless the user clearly authorizes that scope. A suspicious or malformed-looking post should be reported for review rather than silently removed.
-- Before destructive data operations, identify the target environment (local/preview/production), explain the scope, and verify that it matches the user's request.
-- For tests that write to production, use clearly identifiable test data, remove it using the same authorized mechanism, then query the database/API to verify it is absent. Prefer local/preview tests.
+- 방명록 내용은 공개됩니다. 사용자가 명시적으로 허용하지 않은 개인정보를 게시하지 않습니다.
+- 사용자가 삭제 범위를 분명히 허용하지 않는 한 공개 글을 개별 삭제하거나 방명록 전체를 비우지 않습니다. 수상하거나 잘못된 형식처럼 보이는 글은 조용히 지우지 말고 검토를 요청합니다.
+- 데이터를 파괴하는 작업 전 대상 환경(로컬/미리보기/운영), 작업 범위를 설명하고 요청과 일치하는지 확인합니다.
+- 운영 환경에 테스트 데이터를 써야 한다면 식별 가능한 테스트 글을 사용하고, 허용된 방법으로 삭제한 뒤 DB/API를 다시 조회해 사라졌는지 확인합니다. 로컬/미리보기 테스트를 우선합니다.
 
-## Abuse controls and privacy
+## 악용 방지와 개인정보
 
-- Current policy: IP-based UTC-hour limits are 20 creates, 10 edit/delete attempts, and 60 likes. Verify code, bindings, UI copy, and documentation together when changing limits.
-- KV is eventually consistent; describe its limits as best-effort abuse mitigation, not an exact global atomic quota. Consider Durable Objects only if a strict global counter is required.
-- Do not claim IP rate limiting provides unique-person or one-like-per-person enforcement.
-- Avoid exposing raw IPs or secrets. Keep local state and credentials out of Git.
+- 현재 정책: IP 기준 UTC 시간당 작성 20회, 수정/삭제 시도 10회, 공감 60회입니다. 제한을 변경하면 코드, 바인딩, UI 안내, 문서를 함께 확인합니다.
+- KV는 최종적 일관성을 따릅니다. 엄격한 전역 원자 한도가 아니라 악용 완화를 위한 최선 노력(best-effort) 제한이라고 설명합니다. 엄격한 전역 카운터가 필요할 때만 Durable Object(상태를 일관되게 관리하는 Cloudflare 객체)를 검토합니다.
+- IP 제한이 사람을 고유하게 식별하거나 한 사람당 공감 1회만 보장한다고 주장하지 않습니다.
+- 원시 IP나 비밀정보를 노출하지 않습니다. 로컬 상태와 인증 정보는 Git에 넣지 않습니다.

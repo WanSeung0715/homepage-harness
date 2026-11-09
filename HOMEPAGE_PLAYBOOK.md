@@ -1,5 +1,5 @@
-# Homepage playbook moved
+# 홈페이지 플레이북 위치 변경
 
-The detailed, topic-specific harness guidance is now maintained in [`AGENTS.md`](AGENTS.md), which indexes the files under [`docs/harness/`](docs/harness/).
+세부 하네스 지침은 [`AGENTS.md`](AGENTS.md)에서 색인하며, [`docs/harness/`](docs/harness/) 아래 주제별 문서로 관리합니다.
 
-Read `AGENTS.md` first, then consult the topic file relevant to your task. This legacy page remains only to preserve existing links; do not add new detailed rules here.
+먼저 `AGENTS.md`를 읽고 작업과 관련된 주제 지침을 확인하세요. 이 파일은 기존 링크를 유지하기 위한 안내용이며, 새 세부 규칙을 추가하는 기준 문서로 사용하지 않습니다.

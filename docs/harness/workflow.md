@@ -1,40 +1,40 @@
-# Project workflow and structure
+# 프로젝트 작업 흐름과 구조
 
-## Before changing code
+## 코드 변경 전
 
-- Inspect the repository structure, runtime/framework, default branch, remotes, and current working-tree changes before editing.
-- Break the request into UI, behavior, API/data, and deployment requirements; preserve the existing conventions and the user's most recent instructions.
-- Confirm the working directory and target file paths at each shell step. If the expected root or file is absent, stop and locate the correct project rather than guessing another path.
-- Verify supported tooling from project configuration or official documentation before installing dependencies.
-- Check whether content exposes personal information before making it public.
+- 편집하기 전에 저장소 구조, 런타임/프레임워크, 기본 브랜치, 원격 저장소, 현재 작업 트리 변경 사항을 확인합니다.
+- 요청을 UI, 동작, API/데이터, 배포 요구사항으로 나누고 기존 규칙과 사용자의 가장 최근 지시를 따릅니다.
+- 각 셸 작업에서 작업 디렉터리와 대상 파일 경로를 확인합니다. 예상한 저장소 루트나 파일이 없으면 다른 경로를 추측하지 말고 멈춰 올바른 프로젝트를 찾습니다.
+- 프로젝트 설정이나 공식 문서에서 지원 도구를 확인한 뒤 의존성을 설치합니다.
+- 내용을 공개할 때 개인정보가 노출되는지 확인합니다.
 
-## Source and output structure
+## 소스와 배포 구조
 
-- This project keeps the editable source `index.html` at the repository root and the Cloudflare Pages output in `public/`.
-- When changing the page, synchronize source and output deliberately, then compare their relevant content or hashes.
-- Keep user-provided text out of HTML string interpolation; use DOM text APIs such as `textContent`.
-- Keep each change scoped to the request. Review `git diff` and `git status` before reporting or creating a commit.
+- 이 프로젝트는 편집 가능한 원본 `index.html`을 저장소 루트에, Cloudflare Pages 배포 파일을 `public/`에 둡니다.
+- 페이지를 수정하면 원본과 배포본을 의도적으로 동기화하고, 관련 내용이나 해시를 비교합니다.
+- 사용자가 입력한 문구를 HTML 문자열에 직접 삽입하지 않습니다. `textContent` 같은 DOM 텍스트 API를 사용합니다.
+- 변경 범위를 요청에 맞게 제한합니다. 완료를 보고하거나 커밋하기 전에 `git diff`와 `git status`를 검토합니다.
 
-## Reusable pattern for new sites
+## 새 사이트에서 재사용할 구조 예시
 
 ```text
 project/
-├── AGENTS.md                 # instruction index
-├── docs/harness/             # detailed topic-specific guidance
-├── index.html                # editable page source
+├── AGENTS.md                 # 에이전트 지침 색인
+├── docs/harness/             # 주제별 상세 지침
+├── index.html                # 편집 가능한 페이지 원본
 ├── public/
-│   ├── index.html            # Pages output
-│   ├── og-image.png          # share preview asset, if used
-│   └── _worker.js            # Pages Advanced Mode, if needed
-├── migrations/               # D1 migrations, if needed
-├── wrangler.toml
-└── README.md
+│   ├── index.html            # Pages 배포 파일
+│   ├── og-image.png          # 공유 미리보기 이미지(사용 시)
+│   └── _worker.js            # 필요한 경우 Pages Advanced Mode
+├── migrations/               # 필요한 경우 D1 마이그레이션
+├── wrangler.toml             # Wrangler 설정
+└── README.md                 # 프로젝트 안내
 ```
 
-Use only the pieces needed by the new project. Do not copy this site's identifiers, URLs, account/resource IDs, or personal content into another site.
+새 프로젝트에 필요한 구성만 사용합니다. 이 사이트의 식별자, URL, 계정/리소스 ID, 개인정보를 다른 사이트에 복사하지 않습니다.
 
-## User-facing completion report
+## 사용자에게 완료 보고
 
-- Summarize what changed, list checks actually run, and identify the exact commit/deployment only after verifying it.
-- Separate completed, blocked, and unverified work. Include any remaining user action and its exact destination.
-- Do not claim an external editing/rewriting tool was used unless it was actually invoked and its result checked.
+- 무엇을 변경했는지와 실제로 실행한 검사를 요약하고, 커밋/배포는 결과를 확인한 뒤 정확한 정보를 제시합니다.
+- 완료·차단·미검증 항목을 구분하고, 사용자에게 남은 단계와 정확한 위치를 안내합니다.
+- 실제로 실행하고 결과를 확인하지 않았다면 외부 편집·윤문 도구를 사용했다고 말하지 않습니다.

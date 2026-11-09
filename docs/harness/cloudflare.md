@@ -1,23 +1,23 @@
-# Cloudflare runtime and deployment
+# Cloudflare 런타임과 배포
 
-## Project topology
+## 프로젝트 구성
 
-- Find the intended Pages project and public URL from the active repository/account configuration before deploying. Do not assume project names or URLs from another site.
-- Static output: `public/`; Pages Advanced Mode Worker: `public/_worker.js`.
-- D1 binding: `DB`; KV binding: `GUESTBOOK_LIMITER`.
-- Binding names and account resources are project-specific. Never reuse IDs or assume the same resources in another project.
+- 배포 전에 현재 저장소와 계정 설정에서 대상 Pages 프로젝트와 공개 URL을 확인합니다. 다른 사이트의 프로젝트명이나 URL을 가정하지 않습니다.
+- 정적 파일은 `public/`에, Pages Advanced Mode Worker는 `public/_worker.js`에 둡니다.
+- D1 바인딩 이름은 `DB`, KV 바인딩 이름은 `GUESTBOOK_LIMITER`입니다.
+- 바인딩 이름과 계정 리소스는 프로젝트마다 다를 수 있습니다. ID를 재사용하거나 다른 프로젝트에도 같은 리소스가 있다고 가정하지 않습니다.
 
-## Routing and local development
+## 라우팅과 로컬 개발
 
-- In Advanced Mode, the Worker owns request routing. Route `/api/*` to API handlers and all other requests through `env.ASSETS.fetch(request)` so static assets continue to work.
-- Apply D1 schema changes through ordered files in `migrations/`; verify local and remote migration state separately.
-- Use local D1 and Wrangler Pages development for ordinary tests. Local state under `.wrangler/` is not production data and must not be committed.
-- Check `wrangler.toml` bindings and production environment settings before deploying; reject placeholder IDs for remote deployment.
+- Advanced Mode에서는 Worker가 요청 라우팅을 담당합니다. `/api/*`는 API 처리기로 보내고 나머지 요청은 `env.ASSETS.fetch(request)`로 전달해 정적 파일도 제공되게 합니다.
+- D1 스키마 변경은 `migrations/` 아래 순서가 지정된 파일로 관리합니다. 로컬과 원격 마이그레이션 상태를 각각 확인합니다.
+- 일반 테스트에는 로컬 D1과 Wrangler Pages 개발 서버를 사용합니다. `.wrangler/`의 로컬 상태는 운영 데이터가 아니며 커밋하지 않습니다.
+- 원격 배포 전에 `wrangler.toml` 바인딩과 운영 환경 설정을 확인하고, placeholder ID가 있으면 배포를 중단합니다.
 
-## Deployment checks
+## 배포 확인 절차
 
-1. Run syntax/build checks and local Pages + D1 API tests.
-2. Confirm remote bindings/migrations and the intended Pages project/account.
-3. Determine whether Git integration automatically deploys on push; avoid an unnecessary second Wrangler deployment.
-4. After deployment, verify the live homepage, API, static assets, security headers, binding-dependent behavior, and actual deployment/commit identity.
-5. Report the deployed URL and verified facts. A successful local build or a started deploy command is not evidence that production is updated.
+1. 구문/빌드 검사와 로컬 Pages + D1 API 테스트를 수행합니다.
+2. 원격 바인딩/마이그레이션과 대상 Pages 프로젝트·계정을 확인합니다.
+3. Git 연동이 push 시 자동 배포하는지 확인해 불필요한 Wrangler 재배포를 피합니다.
+4. 배포 후 실제 운영 홈페이지, API, 정적 파일, 보안 헤더, 바인딩 의존 동작, 배포/커밋 식별 정보를 확인합니다.
+5. 확인된 배포 URL과 사실을 보고합니다. 로컬 빌드 성공이나 배포 명령 시작만으로 운영 반영을 입증할 수 없습니다.

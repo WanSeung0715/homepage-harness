@@ -1,26 +1,26 @@
-# Verification process and lessons learned
+# 검증 절차와 세션 교훈
 
-## Evidence before completion claims
+## 완료를 주장하기 전에 증거 확인
 
-- Check each effect in its authoritative system: files in the worktree, commits on the remote, deployed HTTP responses, GitHub issue state, or the Search Console property/report.
-- A command starting, a browser tab opening, an authorization flow being launched, or a UI click being attempted is not proof of success.
-- Re-read the current screen/accessibility information before UI actions. Use a uniquely identified, verified target. If controls cannot be identified reliably, stop rather than repeating speculative clicks.
-- Respect the user's explicitly selected tool and boundary (for example, ego/lite). Do not bypass a failed UI operation with CDP, PowerShell, another browser, or API unless the user allows it.
-- State completed, blocked, and unverified results separately; never say a sitemap was submitted, issue closed, or deployment completed without observing that state.
+- 각 작업 결과를 권위 있는 대상 시스템에서 확인합니다. 예: 작업 트리의 파일, 원격 커밋, 배포된 HTTP 응답, GitHub 이슈 상태, Search Console 속성/보고서.
+- 명령이 시작된 것, 브라우저 탭이 열린 것, 인증 절차가 시작된 것, UI 클릭을 시도한 것은 성공의 증거가 아닙니다.
+- UI 동작 전 현재 화면/접근성 정보를 다시 읽습니다. 대상을 유일하게 식별하고 확인한 뒤 조작합니다. 대상을 확실히 식별할 수 없다면 추측성 클릭을 반복하지 않습니다.
+- 사용자가 명시한 도구와 범위(예: ego/lite)를 지킵니다. 실패한 UI 동작을 우회하려고 사용자가 허용하지 않은 CDP, PowerShell, 다른 브라우저, API를 사용하지 않습니다.
+- 완료·차단·미검증 결과를 나눠 보고합니다. Search Console 제출, 이슈 종료, 배포 등을 상태 확인 없이 완료했다고 말하지 않습니다.
 
-## Test discipline
+## 테스트 원칙
 
-- Test progressively: syntax/static checks, local Worker/Pages and D1, browser E2E, then production smoke checks only when justified.
-- Test invalid and boundary inputs as well as normal flows. Verify security headers and the production binding/configuration, not just source code.
-- For pagination, use enough deterministic fixtures to cross a page boundary and verify ordering, no duplicates/omissions, loading-state removal, and cleanup.
-- For performance, record repeatable conditions and actual artifacts. Explain measurement failures (such as HTTP 429) instead of making unsupported comparisons.
-- Run `git diff --check`, inspect the diff, verify synchronized outputs, and confirm the worktree state before final reporting.
+- 구문/정적 검사, 로컬 Worker/Pages와 D1, 브라우저 E2E, 필요한 경우 운영 스모크 테스트 순서로 점진적으로 검사합니다.
+- 정상 입력뿐 아니라 잘못된 입력과 경계값도 확인합니다. 소스 코드만 보지 말고 보안 헤더와 운영 바인딩/설정도 검사합니다.
+- 페이지네이션은 경계 페이지를 넘는 충분하고 결정적인 테스트 데이터로 확인합니다. 정렬, 중복/누락 없음, 로딩 상태 종료 및 데이터 정리를 검사합니다.
+- 성능은 반복 가능한 조건과 실제 산출물을 기록합니다. HTTP 429 같은 측정 실패는 추정치로 대체하지 말고 설명합니다.
+- 최종 보고 전에 `git diff --check`를 실행하고 diff를 검토하며, 동기화된 출력 파일과 작업 트리 상태를 확인합니다.
 
-## Lessons from prior session mistakes
+## 이전 세션 실수에서 얻은 교훈
 
-- **Wrong or stale working directory:** commands were run while the shell was not always at the expected repository root, leading to confusing missing-file checks and repeated path rediscovery. Always resolve and verify the absolute repository path before every batch of reads/edits/tests; stop if it differs.
-- **Premature external-action claims:** browser launches and attempted Search Console interactions were confused with property registration or sitemap submission. Only report the action after checking the resulting property/submission status in Search Console.
-- **Ignoring the requested automation boundary:** unsupported ego/lite UI interaction led to repeated attempts and exploration of alternate automation. Use only the requested tool; after a reliable control cannot be operated, disclose the blocker and ask for the minimum user action.
-- **Unverified or overstated QA outcomes:** production writes, rate limits, issue state, and Lighthouse scores require direct evidence. Minimize production mutations, clean test records and verify absence, retain reports/settings, and do not close unresolved issues.
-- **Public guestbook moderation:** do not infer that a suspicious-looking message is disposable. Preserve user content unless deletion/reset scope is explicit; offer review or an authorized reset instead.
-- **Tool claims:** reading an `im-not-ai` repository is not the same as running its rewriting skill. Do not claim external tools were used unless invocation and output are verified.
+- **잘못되거나 오래된 작업 디렉터리:** 셸이 예상 저장소 루트에 있지 않은 채 명령을 실행해 파일 없음 확인과 경로 재탐색이 반복됐습니다. 읽기/편집/테스트 묶음마다 절대 저장소 경로를 확인하고, 경로가 다르면 멈춥니다.
+- **외부 작업을 성급하게 완료 처리:** 브라우저 실행이나 Search Console 조작 시도를 속성 등록/사이트맵 제출과 혼동했습니다. Search Console에서 실제 속성 및 제출 상태를 확인한 뒤에만 완료로 보고합니다.
+- **요청된 자동화 경계를 지키지 않음:** ego/lite UI 조작이 지원되지 않을 때 시도를 반복하고 다른 자동화 경로를 탐색했습니다. 요청된 도구만 사용하고, 컨트롤 조작이 안정적으로 불가능하면 차단 사실과 사용자에게 필요한 최소 조치를 알립니다.
+- **검증되지 않거나 과장된 QA 결과:** 운영 쓰기, 제한 설정, 이슈 상태, Lighthouse 점수는 직접 증거가 필요합니다. 운영 데이터 변경은 최소화하고 테스트 글을 정리한 뒤 부재를 확인합니다. 보고서와 설정을 보존하고, 해결되지 않은 이슈를 닫지 않습니다.
+- **공개 방명록 관리:** 수상해 보이는 글을 임의로 삭제해도 된다고 추정하지 않습니다. 삭제 범위가 명확히 허용되지 않으면 사용자 콘텐츠를 보존하고 검토 또는 승인된 초기화를 제안합니다.
+- **도구 사용 주장:** `im-not-ai` 저장소를 읽는 것과 윤문 스킬을 실행하는 것은 다릅니다. 실제 실행과 결과 확인 없이는 외부 도구를 사용했다고 말하지 않습니다.

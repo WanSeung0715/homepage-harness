@@ -1,29 +1,29 @@
-# SEO, accessibility, and performance
+# SEO·접근성·성능
 
-## Page and sharing metadata
+## 페이지와 공유 메타데이터
 
-- Set an accurate, page-specific `<title>` and meta description. Do not invent facts or repeat keywords unnaturally.
-- Set canonical URL, Open Graph title/description/image/url, and Twitter card metadata using the verified public URL and a share image served in the deployment output.
-- Prefer broadly supported PNG/JPEG share images at 1200×630; if SVG is used, note that some social platforms may not render it.
-- Only request font families and weights actually used. Consider `display=swap` and necessary preconnects, then test visual stability and accessibility.
+- 정확하고 페이지에 맞는 `<title>`과 검색 결과 설명(meta description)을 설정합니다. 사실을 꾸며내거나 키워드를 부자연스럽게 반복하지 않습니다.
+- 확인된 공개 URL과 배포되는 공유 이미지를 사용해 표준 URL(canonical URL), Open Graph 공유 제목/설명/이미지/URL, Twitter 카드 메타데이터를 설정합니다.
+- 널리 지원되는 1200×630 PNG/JPEG 공유 이미지를 우선합니다. SVG를 쓰면 일부 소셜 플랫폼이 미리보기를 표시하지 않을 수 있음을 알립니다.
+- 실제 사용하는 글꼴 패밀리와 굵기만 요청합니다. `display=swap`과 필요한 preconnect를 검토하고 화면 안정성과 접근성을 검사합니다.
 
-## Crawling and Search Console
+## 크롤링과 Search Console
 
-- Put `robots.txt` and a valid XML sitemap in the deployed root. Sitemap entries must use absolute canonical page URLs and omit API routes.
-- Verify deployed HTTP responses and parse the deployed XML; local files alone do not establish production correctness.
-- Search Console property ownership, sitemap submission, and processing status must be checked in Search Console itself. File deployment, opening a dashboard, or attempting an action is not submission evidence.
-- Complete Search Console actions only with the user's requested browser/tool. If the tool cannot reliably operate the required control, stop and state the blocker without switching to an unapproved automation route.
+- 배포 루트에 `robots.txt`와 유효한 XML 사이트맵을 둡니다. 사이트맵에는 표준 URL을 절대 URL로 기록하고 API 경로는 넣지 않습니다.
+- 로컬 파일만으로 운영 환경이 올바르다고 판단하지 않습니다. 배포된 HTTP 응답을 확인하고 실제 XML을 파싱합니다.
+- Search Console 속성 소유권, 사이트맵 제출 및 처리 상태는 Search Console에서 직접 확인해야 합니다. 파일 배포, 대시보드 열기, 동작 시도는 제출 증거가 아닙니다.
+- 사용자가 지정한 브라우저/도구로만 Search Console 작업을 수행합니다. 해당 도구로 필요한 컨트롤을 안정적으로 조작할 수 없다면, 승인받지 않은 자동화로 바꾸지 말고 멈춰 차단 사유를 알립니다.
 
-## Accessible loading and long lists
+## 접근성 있는 로딩과 긴 목록
 
-- Choose pagination for chronological/archive-style lists where preserving reading position and reaching the page footer matter; use infinite scrolling only for feed-style discovery where it improves the experience.
-- Bound API page size and use a stable cursor/order. Test duplicates, omissions, empty state, end-of-list, and invalid cursor behavior.
-- Use a concise skeleton for initial and incremental loading. Announce loading/results/errors with suitable live status semantics; support reduced motion and visible keyboard focus.
-- Test narrow mobile and wide desktop layouts; constrain long-form input widths so the form remains readable on large screens.
+- 시간순 기록/보관 목록은 읽던 위치를 유지하고 페이지 하단에 도달할 수 있는 페이지네이션을 우선합니다. 발견형 피드에서 사용성을 높일 때만 무한 스크롤을 선택합니다.
+- API 페이지 크기에 상한을 두고 안정적인 커서를 사용합니다. 중복, 누락, 빈 상태, 마지막 페이지, 잘못된 커서를 검사합니다.
+- 최초 로딩과 추가 로딩에 간결한 스켈레톤 UI를 사용합니다. 적절한 스크린리더 알림 영역(live region)으로 로딩/결과/오류를 알리고, 모션 감소 설정과 키보드 포커스를 지원합니다.
+- 좁은 모바일과 넓은 데스크톱 화면을 검사하고, 큰 화면에서도 긴 입력 폼의 너비를 읽기 쉽게 제한합니다.
 
-## Performance measurement
+## 성능 측정
 
-- Measure the live/deployed page on both mobile and desktop when requested, and record tool/version, URL, settings, score, and report artifact.
-- Lighthouse lab scores vary: compare consistent runs and avoid presenting one run as a stable field result.
-- If PageSpeed or another external service returns quota/network errors, report the error and do not fabricate results.
-- Identify the measured bottleneck before optimizing. Re-measure after changes and check layout/behavior regressions.
+- 요청된 경우 운영 페이지를 모바일과 데스크톱에서 측정하고 도구/버전, URL, 설정, 점수, 보고서 파일을 기록합니다.
+- Lighthouse 실험실 점수는 변동합니다. 동일한 조건에서 여러 번 비교하고 단일 측정을 실제 사용자 성능의 확정값으로 표현하지 않습니다.
+- PageSpeed 등 외부 서비스가 쿼터/네트워크 오류를 반환하면 오류를 보고하고 결과를 만들어내지 않습니다.
+- 최적화 전에 실제 병목을 찾습니다. 변경 후 다시 측정하고 레이아웃·기능 회귀를 검사합니다.

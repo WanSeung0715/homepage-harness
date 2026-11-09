@@ -1,23 +1,23 @@
-# Agent guidance index
+# 에이전트 지침 색인
 
-This file is the repository's entry point and source-of-truth index for agent instructions. Read the relevant linked guidance before changing that area. If instructions conflict, follow the most specific applicable file and preserve the user's latest explicit request.
+이 파일은 저장소 지침의 시작점이자 기준 색인입니다. 작업 영역에 맞는 아래 문서를 먼저 읽으세요. 지침이 충돌하면 해당 작업에 가장 구체적인 지침을 따르고 사용자의 최신 요청을 우선합니다.
 
-## Guidance by topic
+## 주제별 지침
 
-- [Project workflow and structure](docs/harness/workflow.md): repository discovery, requirements, paths, source/output synchronization, and change management.
-- [Security and guestbook data](docs/harness/security-data.md): input handling, passwords, XSS, privacy, destructive actions, and abuse controls.
-- [Cloudflare runtime and deployment](docs/harness/cloudflare.md): Pages Advanced Mode, Worker routing, D1/KV, migrations, local development, and production deployment checks.
-- [SEO, accessibility, and performance](docs/harness/seo-performance.md): page metadata, social sharing, robots/sitemap/Search Console, accessibility, list loading, and performance measurement.
-- [Verification and session lessons](docs/harness/verification-lessons.md): evidence required before reporting completion, UI automation constraints, QA practices, and lessons learned from prior mistakes.
+- [프로젝트 작업 흐름과 구조](docs/harness/workflow.md): 저장소 탐색, 요구사항, 경로, 소스·배포 파일 동기화, 변경 관리
+- [보안과 방명록 데이터](docs/harness/security-data.md): 입력 처리, 비밀번호, XSS, 개인정보, 파괴적 작업, 악용 방지
+- [Cloudflare 런타임과 배포](docs/harness/cloudflare.md): Pages Advanced Mode, Worker 라우팅, D1/KV, 마이그레이션, 로컬 개발, 운영 배포 확인
+- [SEO·접근성·성능](docs/harness/seo-performance.md): 페이지 메타데이터, 공유 미리보기, robots/sitemap/Search Console, 접근성, 목록 로딩, 성능 측정
+- [검증 절차와 세션 교훈](docs/harness/verification-lessons.md): 완료 보고에 필요한 증거, UI 자동화 범위, QA 관행, 과거 실수에서 얻은 교훈
 
-## Working rules
+## 공통 작업 규칙
 
-1. Confirm the repository root and current Git state before editing; use absolute paths when referring to project files.
-2. Read the applicable topic guidance before implementation and validate every changed or created file afterward.
-3. Do not claim an action succeeded until its result is observable in the target system (for example, remote commit, deployed response, Search Console status, or issue state).
-4. Report completed, blocked, and unverified work separately. Never imply that opening a page, starting a command, or attempting a UI action completed the task.
-5. Do not commit, push, deploy, modify production data, or close issues unless requested or explicitly required by the user's current task.
+1. 편집 전에 저장소 루트와 현재 Git 상태를 확인합니다. 파일을 언급할 때 절대 경로를 사용합니다.
+2. 변경 전에 관련 주제 지침을 읽고, 수정·생성한 모든 파일을 검증합니다.
+3. 원격 커밋, 배포 응답, Search Console 상태, 이슈 상태 등 대상 시스템에서 결과를 확인하기 전에는 성공했다고 말하지 않습니다.
+4. 완료·차단·미검증 작업을 구분해 보고합니다. 페이지를 열거나 명령을 시작하거나 UI 조작을 시도한 것만으로 완료를 암시하지 않습니다.
+5. 사용자가 이번 요청에서 명시했거나 요구한 경우가 아니면 커밋, 푸시, 배포, 운영 데이터 변경, 이슈 종료를 하지 않습니다.
 
-## Legacy link
+## 이전 문서 안내
 
-[`HOMEPAGE_PLAYBOOK.md`](HOMEPAGE_PLAYBOOK.md) is retained as a pointer for existing README links. The topic files under `docs/harness/` are the detailed guidance source.
+[`HOMEPAGE_PLAYBOOK.md`](HOMEPAGE_PLAYBOOK.md)는 기존 링크를 유지하기 위한 안내 문서입니다. 세부 지침의 기준은 `docs/harness/` 아래 주제별 문서입니다.
